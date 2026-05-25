@@ -1,8 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { CheckCircle, Download, Printer, ArrowLeft } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 
 const Confirmation = () => {
   const { id } = useParams();
@@ -10,6 +11,8 @@ const Confirmation = () => {
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  
+  const receiptRef = useRef();
 
   useEffect(() => {
     const fetchBooking = async () => {
@@ -31,22 +34,42 @@ const Confirmation = () => {
     }
   }, [id, user]);
 
+  const handleDownloadPdf = () => {
+    const element = receiptRef.current;
+    const opt = {
+      margin:       10,
+      filename:     `Bus_Ticket_${booking._id}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
   if (loading) return <div className="text-center py-20">Loading ticket details...</div>;
   if (error) return <div className="text-center py-20 text-red-500">{error}</div>;
   if (!booking) return null;
 
   return (
-    <div className="bg-slate-50 min-h-screen py-10 px-4">
+    <div className="bg-slate-50 min-h-screen py-10 px-4 print:bg-white print:py-0">
       <div className="max-w-3xl mx-auto">
-        <div className="flex items-center gap-2 mb-6">
+        
+        {/* Back Navigation (Hidden on print) */}
+        <div className="flex items-center gap-2 mb-6 print:hidden">
           <Link to="/" className="text-blue-600 hover:text-blue-800 flex items-center gap-1">
             <ArrowLeft size={16} /> Back to Home
           </Link>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        {/* Receipt Container */}
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden print:shadow-none print:border-none" ref={receiptRef}>
+          
           {/* Header */}
-          <div className="bg-blue-600 text-white p-8 text-center relative overflow-hidden">
+          <div className="bg-blue-600 text-white p-8 text-center relative overflow-hidden print:bg-blue-600 print:text-black">
             <div className="absolute top-0 left-0 w-full h-full opacity-10 pattern-dots"></div>
             <CheckCircle size={64} className="mx-auto mb-4 text-green-300 relative z-10" />
             <h2 className="text-3xl font-bold relative z-10">Booking Confirmed!</h2>
@@ -108,16 +131,22 @@ const Confirmation = () => {
               <p className="text-3xl font-bold text-blue-700">₹{booking.totalAmount}</p>
             </div>
           </div>
+        </div>
 
-          {/* Footer Actions */}
-          <div className="bg-slate-50 p-6 border-t border-slate-100 flex justify-center gap-4">
-            <button className="flex items-center gap-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-medium py-2 px-6 rounded-lg transition">
-              <Printer size={18} /> Print
-            </button>
-            <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition shadow-sm">
-              <Download size={18} /> Download PDF
-            </button>
-          </div>
+        {/* Footer Actions (Hidden on print) */}
+        <div className="bg-slate-50 p-6 flex justify-center gap-4 print:hidden">
+          <button 
+            onClick={handlePrint}
+            className="flex items-center gap-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-medium py-2 px-6 rounded-lg transition"
+          >
+            <Printer size={18} /> Print
+          </button>
+          <button 
+            onClick={handleDownloadPdf}
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition shadow-sm"
+          >
+            <Download size={18} /> Download PDF
+          </button>
         </div>
       </div>
     </div>
@@ -125,3 +154,4 @@ const Confirmation = () => {
 };
 
 export default Confirmation;
+
