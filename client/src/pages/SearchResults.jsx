@@ -108,6 +108,14 @@ const SearchResults = () => {
                             <ArrowRight size={16} />
                           </div>
                         </div>
+                        {bus.alternativeRoute && (
+                          <span className="text-[10px] text-slate-500 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-full mt-1 text-center font-medium">
+                            {bus.alternativeRoute.toLowerCase().includes((bus.route?.to || '').toLowerCase())
+                              ? `via ${bus.alternativeRoute.split(' → ').slice(1, -1).join(', ')}`
+                              : `Alt: ${bus.alternativeRoute}`
+                            }
+                          </span>
+                        )}
                       </div>
                       
                       <div className="flex flex-col items-end">
@@ -120,7 +128,7 @@ const SearchResults = () => {
                   </div>
                   
                   <div className="w-full md:w-auto md:min-w-[200px] bg-slate-50 rounded-xl p-4 flex flex-col items-center justify-center border border-slate-100">
-                    <div className="text-2xl font-bold text-blue-600 mb-1">${bus.price}</div>
+                    <div className="text-2xl font-bold text-blue-600 mb-1">₹{bus.price}</div>
                     <div className="flex items-center gap-1 text-slate-500 text-sm mb-4">
                       <Users size={16} /> {bus.capacity} seats total
                     </div>

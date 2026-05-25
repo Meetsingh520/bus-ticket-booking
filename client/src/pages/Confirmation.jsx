@@ -105,7 +105,7 @@ const Confirmation = () => {
                 <p className="text-sm text-blue-800 font-medium">Total Amount Paid</p>
                 <p className="text-xs text-blue-600">via {booking.paymentDetails?.paymentMethod || 'Card'}</p>
               </div>
-              <p className="text-3xl font-bold text-blue-700">${booking.totalAmount}</p>
+              <p className="text-3xl font-bold text-blue-700">₹{booking.totalAmount}</p>
             </div>
           </div>
 

@@ -212,15 +212,15 @@ const Booking = () => {
             <h3 className="text-lg font-bold text-slate-800 mb-4">Fare Summary</h3>
             <div className="flex justify-between items-center py-2 border-b border-slate-100">
               <span className="text-slate-600">Base Fare ({selectedSeats.length} seats)</span>
-              <span className="font-medium">${(selectedBus?.price * selectedSeats.length) || 0}</span>
+              <span className="font-medium">₹{(selectedBus?.price * selectedSeats.length) || 0}</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-slate-100">
               <span className="text-slate-600">Taxes & Fees</span>
-              <span className="font-medium">$0</span>
+              <span className="font-medium">₹0</span>
             </div>
             <div className="flex justify-between items-center py-4 text-xl font-bold text-slate-800">
               <span>Total Amount</span>
-              <span className="text-blue-600">${(selectedBus?.price * selectedSeats.length) || 0}</span>
+              <span className="text-blue-600">₹{(selectedBus?.price * selectedSeats.length) || 0}</span>
             </div>
             
             <button

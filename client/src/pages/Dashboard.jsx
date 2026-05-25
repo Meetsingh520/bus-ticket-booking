@@ -100,7 +100,7 @@ const Dashboard = () => {
                   </div>
 
                   <div className="flex flex-col justify-between items-end min-w-[150px]">
-                    <div className="text-2xl font-bold text-slate-800">${booking.totalAmount}</div>
+                    <div className="text-2xl font-bold text-slate-800">₹{booking.totalAmount}</div>
                     
                     <div className="flex flex-col gap-2 w-full mt-4">
                       <Link

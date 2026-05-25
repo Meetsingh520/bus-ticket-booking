@@ -13,7 +13,7 @@ const busSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ['AC Seater', 'AC Sleeper', 'Non-AC Seater', 'Non-AC Sleeper'],
+      enum: ['AC Seater', 'AC Sleeper', 'Non-AC Seater', 'Non-AC Sleeper', 'AC Luxury', 'AC Deluxe', 'Volvo AC', 'AC Mini Bus'],
       required: true,
     },
     capacity: {
@@ -37,6 +37,12 @@ const busSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
+    },
+    alternativeRoute: {
+      type: String,
+    },
+    paymentMethod: {
+      type: String,
     },
     isAvailable: {
       type: Boolean,

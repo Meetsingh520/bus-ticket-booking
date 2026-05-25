@@ -167,7 +167,7 @@ const Payment = () => {
                 disabled={loading}
                 className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-6 rounded-xl transition shadow-lg flex justify-center items-center gap-2"
               >
-                {loading ? 'Processing...' : `Pay $${totalAmount}`}
+                {loading ? 'Processing...' : `Pay ₹${totalAmount}`}
               </button>
             </form>
           </div>
@@ -186,17 +186,17 @@ const Payment = () => {
             <div className="space-y-2 mb-4 text-sm">
               <div className="flex justify-between">
                 <span className="text-slate-600">Seats ({selectedSeats.join(', ')})</span>
-                <span className="font-medium">${totalAmount}</span>
+                <span className="font-medium">₹{totalAmount}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-600">Service Fee</span>
-                <span className="font-medium">$0</span>
+                <span className="font-medium">₹0</span>
               </div>
             </div>
 
             <div className="flex justify-between items-center pt-4 border-t border-slate-100 text-xl font-bold text-slate-800">
               <span>Total</span>
-              <span className="text-blue-600">${totalAmount}</span>
+              <span className="text-blue-600">₹{totalAmount}</span>
             </div>
           </div>
         </div>
